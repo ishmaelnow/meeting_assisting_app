@@ -1,23 +1,33 @@
-# Meeting Assisting App
+---
+title: Meeting Assistant – Whisper + Mistral
+emoji: 🎧
+colorFrom: indigo
+colorTo: blue
+sdk: gradio
+app_file: app.py
+pinned: false
+---
 
-Transcribe meeting audio with Whisper, summarize with Mistral, and do RAG-style Q&A over the transcript using FAISS + LangChain.
+# Meeting Assistant – Whisper + Mistral
 
-## Quick Start
+This app lets you:
 
-```bash
-# 1. Create & activate venv (example)
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+1. Upload a meeting audio file (`.mp3`, `.wav`, etc.)
+2. Transcribe it using OpenAI Whisper
+3. Summarize the meeting with Mistral
+4. Ask questions about the meeting using a FAISS vector store + RAG-style retrieval
 
-# 2. Install dependencies
-pip install -r requirements.txt
+## How it works
 
-# 3. Put a small audio file in the project folder, e.g.:
-#    min_meeting.mp3
+- **Transcription:** `transcription.py` uses the OpenAI API to generate a transcript.  
+- **Summarization:** `summarization.py` calls Mistral to produce a structured summary.  
+- **Vector Store:** `vector_store.py` builds a FAISS index over transcript chunks.  
+- **Q&A:** `qa.py` retrieves relevant chunks and asks Mistral to answer questions.  
+- **UI:** `gradio_app.py` defines the Gradio interface; `app.py` exposes it to Hugging Face Spaces.
 
-# 4. Set environment variables (or .env)
-# OPENAI_API_KEY=...
-# MISTRAL_API_KEY=...
+### Environment variables
 
-# 5. Run
-python main.py
+These are set in the Space under **Settings → Variables & secrets**:
+
+- `OPENAI_API_KEY`
+- `MISTRAL_API_KEY`
